@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup</title>
+    <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body>
+    <div class="container">
+        <div class="login-box">
+            <h2>Worker Profile</h2>
+
+            <form method="post" action="/workerpro">
+                
+                <!-- <input type="email" placeholder="Email" name="email" required>
+                <input type="password" placeholder="Password" name="password" required> -->
+                <input type="text" placeholder="Full Name" name="name" required>
+                <input type="number" placeholder="Contect Number" name="Contect number" required>
+               
+
+                <label for="profession">Select Profession</label>
+
+<select name="profession" id="profession" required>
+<option value="" disabled selected>-- Select Your Profession --</option>
+
+<% professions.forEach(function(p){ %>
+
+<option value="<%= p.value %>"><%= p.name %></option>
+
+<% }) %>
+
+</select>
+                <!-- <label for="profession">Select Profession</label>
+<select name="profession" id="profession"  required>
+    <option value="" disabled selected>-- Select Your Profession --</option>
+
+    <option value="carpenter">Carpenter</option>
+    <option value="welder">Welder</option>
+    
+</select> -->
+                 <input type="number" placeholder="experienceYears" name="experienceYears" required>
+                <input type="text" placeholder="adress" name="adress"  required>
+                <!-- <input type="email" placeholder="Email" required> -->
+               
+                
+                <button type="submit" class="login-btn">Signup</button>
+            </form>
+
+            <p class="signup-text">
+                Already have account?
+                <a href="/login">Login</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Delivery company</title>
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo">
+                <i class="fa-solid fa-handshake" style="color: #d96530;"></i>
+                <span>ServiceDelivery</span>
+            </div>
+            <div class="profile-icon">
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Search...">
+            </div>
+        </div>
+
+        <div class="nav-right">
+            <button class="btn btn-blue">Hire for Service</button>
+            <button class="btn btn-orange">Post a Job</button>
+            <!-- <button class="btn btn-darkblue">Shopping</button> -->
+            <button class="btn btn-outline" onclick="window.location.href='/yourworkpage';" >YOUR WORK <i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="hero">
+            <h1>Get Things Done Locally & Easily!</h1>
+            <div class="hero-banners">
+                <div class="banner" style="background-color: #eaf3fa;">
+                    <div class="banner-img placeholder-img">🏪</div>
+                    <p>Create Your Business Account in Minutes</p>
+                </div>
+                <div class="banner" style="background-color: #fdf5e6;">
+                    <div class="banner-img placeholder-img">📋</div>
+                    <p>Post Jobs & Get Hired Fast</p>
+                </div>
+                <div class="banner" style="background-color: #fcf6e2;">
+                    <div class="banner-img placeholder-img">👷‍♂️</div>
+                    <p>Find Skilled Workers for Your Home & Local Needs</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- <section class="latest-posts">
+            <div class="section-header">
+                <h2>Latest Posts</h2>
+                <div class="line"></div>
+            </div>
+
+            <div class="posts-grid" id="posts-container">
+                <% if (typeof posts !== 'undefined' && posts.length > 0) { %>
+                    <% posts.forEach(post => { %>
+                        <div class="post-card">
+                            <div class="post-header">
+                                <img src="<%= post.avatar %>" alt="Profile" class="avatar">
+                                <div class="author-info">
+                                    <h4><%= post.author %></h4>
+                                    <span class="meta"><i class="fa-solid fa-heart"></i> <%= post.timeAgo %></span>
+                                </div>
+                                <div class="badge-container">
+                                    <span class="badge"><%= post.accountType %> <i class="fa-solid fa-chevron-right"></i></span>
+                                </div>
+                            </div>
+                            
+                            <div class="post-body">
+                                <p><%= post.text %></p>
+                                <p class="hashtags"><%= post.hashtags %></p>
+                            </div>
+                            
+                            <div class="post-media">
+                                <img src="<%= post.imageUrl %>" alt="Post content">
+                                <% if (post.isVideo== true) { %>
+                                    <div class="play-button"><i class="fa-solid fa-play"></i></div>
+                                <% } %>
+                            </div>
+                            
+                            <div class="post-footer">
+                                <div class="action"><i class="fa-solid fa-heart" style="color: #e74c3c;"></i> <%= post.likes %>k</div>
+                                <div class="action"><i class="fa-solid fa-comment"></i> <%= post.comments %></div>
+                                <div class="action"><i class="fa-solid fa-share"></i></div>
+                                <div class="action"><i class="fa-solid fa-ellipsis"></i></div>
+                            </div>
+                        </div>
+                    <% }) %>
+                <% } else { %>
+                    <p>No posts available right now.</p>
+                <% } %>
+            </div>
+
+            <div id="scroll-trigger"></div>
+        </section> -->
+    </main>
+
+    <!-- <script src="/js/infiniteScroll.js"></script> -->
+
+</body>
+</html>

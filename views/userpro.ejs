@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup</title>
+    <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body>
+    <div class="container">
+        <div class="login-box">
+            <h2>User Profile</h2>
+
+            <form method="post" action="/userpro">
+                <!-- <input type="text" placeholder="Full Name" required> -->
+                <input type="email" placeholder="Email" name="email" required>
+                <input type="password" placeholder="Password" name="password" required >
+                <input type="text" placeholder="Full Name" name="name" required>
+                <input type="number" placeholder="Contect Number" name="ContectNum" required>
+                <input type="text" placeholder="adress" name="adress" required>
+                <!-- <input type="email" placeholder="Email" required> -->
+               
+                
+                <button  class="login-btn" name="role" value="user">Signup</button>
+            </form>
+
+            <p class="signup-text">
+                Already have account?
+                <a href="/login">Login</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
+

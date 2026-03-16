@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post a Job</title>
+    <link rel="stylesheet" href="/css/postjob.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="page-wrapper">
+
+        <div class="glass-container">
+
+            <button class="btn-back" onclick="history.back()">
+                <i class="fa-solid fa-chevron-left"></i> Back to Home
+            </button>
+
+            <div class="form-card">
+
+                <div class="form-header">
+                    <h1>Post Your Job</h1>
+                    <p>Find the right worker for your home task</p>
+                </div>
+
+                <form action="/postjob" method="POST" class="job-form" enctype="multipart/form-data">
+
+                    <div class="form-content-grid">
+
+                        <div class="left-column">
+
+                            <div class="form-group">
+                                <label>Service Needed:</label>
+                                <div class="input-wrapper select-wrapper">
+                                    <!-- <select name="service">
+                                        <option value="" disabled selected>Select Service</option>
+                                        <option value="plumbing">Plumbing</option>
+                                        <option value="electrical">Electrical</option>
+                                        <option value="gardening">Gardening</option>
+                                    </select> -->
+                                    <select name="profession" id="profession" required>
+                                        <option value="" disabled selected></option>
+
+                                        <% professions.forEach(function(p){ %>
+
+                                            <option value="<%= p.value %>">
+                                                <%= p.name %>
+                                            </option>
+
+                                            <% }) %>
+
+                                    </select>
+                                    <i class="fa-solid fa-chevron-down dropdown-icon"></i>
+                                </div>
+                            </div>
+
+                            <div class="form-group align-top">
+                                <label>Job Description:</label>
+                                <div class="input-wrapper">
+                                    <textarea name="description" placeholder="Describe the task you need done..."
+                                        rows="3"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Location:</label>
+                                <div class="input-wrapper with-icon">
+                                    <i class="fa-solid fa-location-dot icon-orange"></i>
+                                    <input type="text" name="location" placeholder="Enter Location">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Budget:</label>
+                                <div class="input-wrapper with-icon">
+                                    <i class="fa-solid fa-dollar-sign icon-dark"></i>
+                                    <input type="number" name="budget" placeholder="Enter Budget">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Job Status:</label>
+                                <div class="radio-group">
+                                    <label class="radio-label">
+                                        <input type="radio" name="status" value="open" checked>
+                                        <span class="custom-radio"></span> Open
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="status" value="assigned">
+                                        <span class="custom-radio"></span> Assigned
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="status" value="completed">
+                                        <span class="custom-radio"></span> Completed
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="right-column">
+                            <h3>Add Reference Photos</h3>
+                            <div class="upload-box">
+                                <i class="fa-solid fa-camera camera-icon"></i>
+                                <p>Upload Images of the Work</p>
+                                <label class="btn-upload">
+                                    <i class="fa-solid fa-plus"></i> Upload Photos
+                                    <input type="file"  name="images" multiple accept="image/*" style="display: none;">
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-footer">
+                        <button type="submit" class="btn-submit">Post Job</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

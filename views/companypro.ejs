@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup</title>
+    <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body>
+    <div class="container">
+        <div class="login-box">
+            <h2>Company Profile</h2>
+
+            <form method="post" action="/companypro">
+                <!-- <input type="text" placeholder="Fmaiull Name" required> -->
+                <!-- <input type="email" placeholder="Email" name="email" required>
+                <input type="password" placeholder="Password" name="password" required> -->
+                <input type="text" placeholder="CompanyName" name="CompanyName" required>
+                <input type="text" placeholder="UserName/OwnerName" name="UserName" required>
+                <input type="text" placeholder="Adress" name="adress" required>
+                <input type="text" placeholder="service" name="service" required>
+                <!-- <input type="email" placeholder="Email" required> -->
+               
+                
+                <button type="submit" class="login-btn">Signup</button>
+            </form>
+
+            <p class="signup-text">
+                Already have account?
+                <a href="/login">Login</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

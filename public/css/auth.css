@@ -1,0 +1,122 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to right, #d4418e, #0652c5);
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.login-box {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 350px;
+    transition: all 0.5s ease-in-out;
+
+    form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: black;
+}
+
+.toggle-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.toggle-buttons button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.toggle-buttons .active {
+    background: linear-gradient(to right, #d4418e, #0652c5);
+    color: white;
+    border-radius: 5px;
+}
+
+form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.forgot-password {
+    color: #d4418e;
+    text-decoration: none;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.login-btn, .account-type {
+    text-decoration: none;
+    
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: linear-gradient(to right, #d4418e, #0652c5);
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.login-btn:hover, .account-type:hover {
+    opacity: 0.9;
+}
+
+.signup-text {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.signup-text a {
+    color: #d4418e;
+    text-decoration: none;
+}
+
+.hidden {
+    display: none;
+}
+
+
+.login-btn a , .account-type a {
+    text-decoration: none;
+    color: white;
+}
+.profilrbtn{
+    display: flex;
+  justify-content: flex-end;
+}
+

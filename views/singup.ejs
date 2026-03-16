@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup</title>
+    <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body>
+    <div class="container">
+        <div class="login-box">
+            <h2>Signup Form</h2>
+
+            <form method="post" action="/signup" >
+                <!-- <input type="text" placeholder="Full Name" required>  -->
+               <input type="email" placeholder="Email" name="email" required >
+                <input type="password" placeholder="Password" name="password" id="password" required> 
+
+                <h3>Please select acount type</h3>
+                <div class="profilrbtn">
+                <!-- <a href="/workerpro?role=worker" type="submit"  class="login-btn" >Worker</a>
+                <a href="/userpro?role=user" type="submit" class="login-btn" >USer</a>
+                <a href="/companypro?role=company" type="submit" class="login-btn">company</a> -->
+
+                <!-- <button type="submit" name="role" value="user" class="login-btn">User</button> -->
+
+                <button type="submit" name="role" value="worker" class="login-btn">Worker</button>
+
+                <button type="submit" name="role" value="company" class="login-btn">Company</button>
+
+                </div>
+                
+                 <!-- <button type="submit" class="login-btn">Signup</button>  -->
+            </form>
+
+            <p class="signup-text">
+                Already have account?
+                <a href="/login">Login</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

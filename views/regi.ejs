@@ -1,0 +1,92 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <link rel="stylesheet" href="/logReg.css">
+</head>
+<body>
+    <div class="container">
+        <div class="login-box" >
+            <h2 id="r">Login Form</h2>
+            <div class="toggle-buttons" id="login-boxID">
+                <button class="active" id="loginBtn">Login</button>
+                <button id="signupBtn">Signup</button>
+            </div>
+            <div id="form-container">
+                <form id="loginForm">
+                    <input type="email" placeholder="Phone No" required>
+                    <input type="password" placeholder="Password" required>
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                    <button type="submit" class="login-btn"><a href="/">Login</a></button>
+                </form>
+               
+                <form id="signupForm" class="hidden">
+                    <p>Select account type:</p>
+                    <button type="button" class="account-type" id="workerBtn">Worker</button>
+                    <button type="button" class="account-type" id="userBtn"><a href="/">User</a></button>
+                </form>
+            </div>
+            <p class="signup-text" id="h">Not a member? <a href="#">Signup now</a></p>
+
+            <div id="WorkerID" class="workerBox">
+                
+               
+               
+    </div>
+    <script>
+        document.getElementById("WorkerID").style.display="none";
+
+        document.getElementById("signupBtn").addEventListener("click", function() {
+            document.getElementById("loginForm").classList.add("hidden");
+            document.getElementById("signupForm").classList.remove("hidden");
+            document.getElementById("signupBtn").classList.add("active");
+            document.getElementById("loginBtn").classList.remove("active");
+        });
+
+        document.getElementById("loginBtn").addEventListener("click", function() {
+
+            document.getElementById("signupForm").classList.add("hidden");
+            document.getElementById("loginForm").classList.remove("hidden");
+            document.getElementById("loginBtn").classList.add("active");
+            document.getElementById("signupBtn").classList.remove("active");
+        });
+
+        document.getElementById("workerBtn").addEventListener("click", function() {
+            
+            
+        });
+       
+
+        
+    </script>
+</body>
+</html>
+ -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body>
+    <div class="container">
+        <div class="login-box">
+            <h2>Login Form</h2>
+
+            <form method="post" action="/login">
+                <input type="email" placeholder="Email" name="email" required>
+                <input type="password" placeholder="Password" name="password" required>
+                <a href="#" class="forgot-password">Forgot password?</a>
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+
+            <p class="signup-text">
+                Not a member?
+                <a href="/singup">Signup now</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
