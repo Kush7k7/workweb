@@ -94,9 +94,11 @@ app.post("/login", async (req, resp) => {
     req.session.user = {
         email: user.email,
         id: user._id
+        // name: user.name,
     };
      if(user.role === "user"){
      resp.redirect("/");
+    //  console.log(user);
  }
 
  else if(user.role === "worker"){
@@ -130,6 +132,7 @@ app.post("/userpro", async (req, resp) => {
 });
 
 import upload from "./public/js/multer.js";
+import { name } from 'ejs';
 
 app.post("/postjob", upload.array("images", 5), async (req, res) => {
 
