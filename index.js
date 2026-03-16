@@ -74,9 +74,12 @@ app.post("/login", async (req, resp) => {
 
     const { email, password } = req.body;
 
-    
+    let usename =null;
 
     const user = await db.collection("CommonUser").findOne({ email });
+    if (user){
+         usename= await db.collection("User").findOne({accountId : user._id});
+    }
     
 
     if(!user){
@@ -93,12 +96,12 @@ app.post("/login", async (req, resp) => {
     // create session
     req.session.user = {
         email: user.email,
-        id: user._id
-        // name: user.name,
+        id: user._id,
+        username:usename.name
     };
      if(user.role === "user"){
      resp.redirect("/");
-    //  console.log(user);
+     console.log("User logged in:", req.session.user);
  }
 
  else if(user.role === "worker"){
@@ -132,7 +135,7 @@ app.post("/userpro", async (req, resp) => {
 });
 
 import upload from "./public/js/multer.js";
-import { name } from 'ejs';
+
 
 app.post("/postjob", upload.array("images", 5), async (req, res) => {
 
@@ -140,6 +143,7 @@ app.post("/postjob", upload.array("images", 5), async (req, res) => {
 
     const { profession, description, location, budget, status } = req.body;
 
+    const userName = req.session.user.username;
     // get image urls from cloudinary
     const imageUrls = req.files.map(file => file.path);
 
@@ -152,7 +156,10 @@ app.post("/postjob", upload.array("images", 5), async (req, res) => {
       budget,
       status,
       images: imageUrls,
-      createdAt: new Date()
+      createdAt: new Date(),
+       userId: req.session.userId,
+       userName
+
     });
 
     res.redirect("/");

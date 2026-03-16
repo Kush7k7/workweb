@@ -26,17 +26,19 @@
         
         <div class="nav-right">
             <button class="btn btn-blue">Hire for Service</button>
-            <button class="btn btn-orange" onclick="window.location.href='/postjob';">Post a Job</button>
-             <!-- <form action="/postjobbtn" method="POST">
-                 <input type="hidden" name="action" value="postjob">
-                 <button type="submit" class="btn btn-orange">Post a Job</button>
-            </form> -->
+            <!-- <button class="btn btn-orange" onclick="window.location.href='/postjob';">Post a Job</button> -->
+              <button class="btn btn-orange" onclick="window.location.href='/yourpostedjobs';">YourPostedJobs</button>
+             
             <button class="btn btn-darkblue">Shopping</button>
             <button class="btn btn-outline" onclick="window.location.href='/singup';" >Create Business Account <i class="fa-solid fa-chevron-right"></i></button>
         </div>
     </nav>
 
-    <main class="container">
+    <main class="container" >
+                  <!-- Floating Button -->
+<button class="floating-btn" onclick="window.location.href='/postjob'; ">
+   Post  Job
+</button>
         <section class="hero">
             <h1>Get Things Done Locally & Easily!</h1>
             <div class="hero-banners">
@@ -56,6 +58,7 @@
         </section>
 
         <section class="latest-posts">
+  
             <div class="section-header">
                 <h2>Latest Posts</h2>
                 <div class="line"></div>

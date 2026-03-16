@@ -273,3 +273,31 @@ body {
 #scroll-trigger{
     height:20px;
 }
+
+.floating-btn {
+    position: fixed;
+    bottom: 179px;
+    right: 25px;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    border: none;
+    background: #ff6b00;
+    color: white;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: 0.3s;
+}
+
+.floating-btn:hover {
+    background: #e65c00;
+    transform: scale(1.1);
+}
