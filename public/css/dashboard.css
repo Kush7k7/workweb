@@ -308,3 +308,102 @@ body {
 
 
 
+/* POsted job---------------- */
+
+
+.job-filters {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.job-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.job-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.job-card:hover {
+    transform: translateY(-5px);
+}
+
+.job-img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.desc {
+    font-size: 14px;
+    color: #555;
+}
+
+.status {
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+.status.open {
+    background: green;
+    color: #fff;
+}
+
+.status.assigned {
+    background: orange;
+    color: #fff;
+}
+
+.status.completed {
+    background: gray;
+    color: #fff;
+}
+
+.job-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.offer-btn {
+    background: green;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+}
+
+.chat-btn {
+    background: blue;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+}
+
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination button {
+    margin: 5px;
+    padding: 8px 12px;
+    border: none;
+    background: #eee;
+    border-radius: 5px;
+}
+
+.pagination .active {
+    background: orange;
+    color: white;
+}

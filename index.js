@@ -251,9 +251,46 @@ app.get("/companypro",(req,resp)=>{
 resp.render("companypro")
 });
 
-app.get("/homeWorker",(req,resp)=>{
-resp.render("homeWorker")
+// app.get("/homeWorker",(req,resp)=>{
+// resp.render("homeWorker")
+// });
+
+app.get("/homeWorker", async (req, res) => {
+  try {
+    let { page = 1, limit = 8, category, location, minBudget, maxBudget } = req.query;
+
+    page = parseInt(page);
+    limit = parseInt(limit);
+
+    let filter = {};
+
+    if (category) filter.profession = category;
+    if (location) filter.location = location;
+
+    if (minBudget || maxBudget) {
+      filter.budget = {};
+      if (minBudget) filter.budget.$gte = Number(minBudget);
+      if (maxBudget) filter.budget.$lte = Number(maxBudget);
+    }
+
+    const total = await PostJob.countDocuments(filter);
+
+    const jobs = await PostJob.find(filter)
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    res.render("homeworker", {
+      jobs,
+      currentPage: page,
+      totalPages: Math.ceil(total / limit)
+    });
+
+  } catch (err) {
+    console.log(err);
+  }
 });
+
 
 app.get("/homeCompany",(req,resp)=>{
 resp.render("homeCopany")
