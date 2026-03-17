@@ -52,14 +52,14 @@
                     <p>Find Skilled Workers for Your Home & Local Needs</p>
                 </div>
             </div>
-        
+        </section>
 
         
 
         <section class="latest-posts">
           <section class="job-listings-section" style="margin-top: 40px;">
     <h2 style="margin-bottom: 20px; color: #333; border-bottom: 2px solid #eee; padding-bottom: 10px;">
-        <i class="fas fa-briefcase"></i> Available Jobs in Your Area
+        <i class="fas fa-briefcase"></i> Available Jobs in Your Area </h2>
 
         <!-- FILTER SECTION -->
 <div class="job-filters">
@@ -83,7 +83,8 @@
     <% jobs.forEach(job => { %>
         <div class="job-card">
             
-            <img src="<%= job.images[0] %>" class="job-img"/>
+            
+            <img src="<%= job.images && job.images.length ? job.images[0] : '/default.jpg' %>" class="job-img"/>
 
             <h3><%= job.profession %></h3>
 
@@ -117,52 +118,9 @@
 </div>
     
 </section>
-
-           <!-- <div class="posts-grid" id="posts-container">
-                <% if (typeof posts !== 'undefined' && posts.length > 0) { %>
-                    <% posts.forEach(post => { %>
-                        <div class="post-card">
-                            <div class="post-header">
-                                <img src="<%= post.avatar %>" alt="Profile" class="avatar">
-                                <div class="author-info">
-                                    <h4><%= post.author %></h4>
-                                    <span class="meta"><i class="fa-solid fa-heart"></i> <%= post.timeAgo %></span>
-                                </div>
-                                <div class="badge-container">
-                                    <span class="badge"><%= post.accountType %> <i class="fa-solid fa-chevron-right"></i></span>
-                                </div>
-                            </div>
-                            
-                            <div class="post-body">
-                                <p><%= post.text %></p>
-                                <p class="hashtags"><%= post.hashtags %></p>
-                            </div>
-                            
-                            <div class="post-media">
-                                <img src="<%= post.imageUrl %>" alt="Post content">
-                                <% if (post.isVideo== true) { %>
-                                    <div class="play-button"><i class="fa-solid fa-play"></i></div>
-                                <% } %>
-                            </div>
-                            
-                            <div class="post-footer">
-                                <div class="action"><i class="fa-solid fa-heart" style="color: #e74c3c;"></i> <%= post.likes %>k</div>
-                                <div class="action"><i class="fa-solid fa-comment"></i> <%= post.comments %></div>
-                                <div class="action"><i class="fa-solid fa-share"></i></div>
-                                <div class="action"><i class="fa-solid fa-ellipsis"></i></div>
-                            </div>
-                        </div>
-                    <% }) %>
-                <% } else { %>
-                    <p>No posts available right now.</p>
-                <% } %>
-            </div>
-
-            <div id="scroll-trigger"></div> -->
-        
     </main>
 
-    <script src="public/js/homeWorker.js"></script>
+    <script src="/js/homeWorker.js"></script>
 
     
 

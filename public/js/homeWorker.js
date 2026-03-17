@@ -1,8 +1,8 @@
-function changePage(page) {
+
+
+window.changePage = function(page) {
     const params = new URLSearchParams(window.location.search);
-
     params.set("page", page);
-
     window.location.href = "/homeWorker?" + params.toString();
 }
 
