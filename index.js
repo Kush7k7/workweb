@@ -268,26 +268,32 @@ app.get("/homeWorker", async (req, res) => {
     if (location) filter.location = location;
 
     if (minBudget || maxBudget) {
-      filter.budget = {};
-      if (minBudget) filter.budget.$gte = Number(minBudget);
-      if (maxBudget) filter.budget.$lte = Number(maxBudget);
+      filter.$expr = {
+        $and: [
+          minBudget ? { $gte: [{ $toDouble: "$budget" }, Number(minBudget)] } : true,
+          maxBudget ? { $lte: [{ $toDouble: "$budget" }, Number(maxBudget)] } : true
+        ]
+      };
     }
 
-    const total = await PostJob.countDocuments(filter);
+    const jobCollection = db.collection("postjob");
 
-    const jobs = await PostJob.find(filter)
+    const total = await jobCollection.countDocuments(filter);
+
+    const jobs = await jobCollection.find(filter)
       .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
-      .limit(limit);
+      .limit(limit)
+      .toArray();
 
-    res.render("homeworker", {
+    res.render("homeWorker", {
       jobs,
       currentPage: page,
-      totalPages: Math.ceil(total / limit)
+      totalPages: Math.ceil(total / limit) || 1
     });
 
   } catch (err) {
-    console.log(err);
+    console.log("ERROR:", err);
   }
 });
 

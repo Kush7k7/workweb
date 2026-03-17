@@ -1,6 +1,7 @@
 
 
 window.changePage = function(page) {
+    console.log("clicked page:", page); // DEBUG
     const params = new URLSearchParams(window.location.search);
     params.set("page", page);
     window.location.href = "/homeWorker?" + params.toString();
