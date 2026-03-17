@@ -141,7 +141,7 @@ app.post("/postjob", upload.array("images", 5), async (req, res) => {
 
   try {
 
-    const { profession, description, location, budget, status } = req.body;
+    const { profession, description, location, budget } = req.body;
 
     const userName = req.session.user.username;
     // get image urls from cloudinary
@@ -154,7 +154,6 @@ app.post("/postjob", upload.array("images", 5), async (req, res) => {
       description,
       location,
       budget,
-      status,
       images: imageUrls,
       createdAt: new Date(),
        userId: req.session.userId,
@@ -251,9 +250,7 @@ app.get("/companypro",(req,resp)=>{
 resp.render("companypro")
 });
 
-// app.get("/homeWorker",(req,resp)=>{
-// resp.render("homeWorker")
-// });
+
 
 app.get("/homeWorker", async (req, res) => {
   try {

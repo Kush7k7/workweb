@@ -381,7 +381,13 @@ body {
     padding: 6px 10px;
     border-radius: 6px;
 }
-
+.Claim-btn {
+    background: rgb(255, 255, 255);
+    color: black;
+    border: 3px solid rgb(198, 124, 4);
+    padding: 6px 10px;
+    border-radius: 6px;
+}
 .chat-btn {
     background: blue;
     color: white;

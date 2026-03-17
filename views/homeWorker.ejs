@@ -88,17 +88,24 @@
 
             <h3><%= job.profession %></h3>
 
+            <h>Posted by:<span style="font-weight: bold;"> <%= job.userName %></span></h>
+            <p>Location 🚩:<span style="font-weight: bold;"> <%= job.location %></span></p>
+            <p>Budget ₹:<span style="font-weight: bold;"> <%= job.budget %></span></p>
+
+            <!-- <p>📍 <%= job.location %></p>
+            <p>💰 ₹<%= job.budget %></p> -->
+
             <p class="desc"><%= job.description %></p>
 
-            <p>📍 <%= job.location %></p>
-            <p>💰 ₹<%= job.budget %></p>
+            
 
-            <span class="status <%= job.status %>">
+            <!-- <span class="status <%= job.status %>">
                 <%= job.status %>
-            </span>
+            </span> -->
 
             <div class="job-actions">
                 <button class="offer-btn">Send Offer</button>
+                <button class="Claim-btn">Claim</button>
                 <button class="chat-btn">Chat</button>
             </div>
 
