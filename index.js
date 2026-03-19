@@ -101,7 +101,7 @@ app.post("/login", async (req, resp) => {
     };
      if(user.role === "user"){
      resp.redirect("/");
-     console.log("User logged in:", req.session.user);
+     
  }
 
  else if(user.role === "worker"){
@@ -311,9 +311,23 @@ const professionsCollection = db.collection("professions");
     resp.render("postjob", { professions });
 });
 
+
+import timeAgo from "./public/js/timeAgo.js";
+
 app.get("/yourpostedjobs",async (req,resp)=>{
     if(!req.session.user){
         return resp.redirect("/login");
     }
+    try {
+    const posts = await db.collection("postjob")
+      .find({ userId: req.session.user.id }) // only user's posts
+      .sort({ createdAt: -1 })
+      .toArray();
+
+    resp.render("yourpostedjobs", { posts, timeAgo });
+  } catch (err) {
+    console.log(err);
+    resp.send("Error loading posts");
+  }
 
 });

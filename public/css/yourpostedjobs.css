@@ -1,0 +1,117 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f9;
+  margin: 0;
+}
+
+.container {
+  width: 90%;
+  margin: auto;
+  padding: 20px;
+}
+
+.header h1 {
+  margin-bottom: 5px;
+}
+
+.header p {
+  color: gray;
+}
+
+.job-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.job-card {
+  background: white;
+  border-radius: 12px;
+  display: flex;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.job-img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.job-content {
+  padding: 15px;
+  flex: 1;
+}
+
+.job-content h3 {
+  margin: 0;
+}
+
+.desc {
+  font-size: 14px;
+  color: #555;
+}
+
+.location {
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.stats {
+  display: flex;
+  gap: 15px;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.status.open {
+  background: #d4f5d4;
+  color: green;
+}
+
+.status.closed {
+  background: #ffd6d6;
+  color: red;
+}
+
+.time {
+  font-size: 13px;
+  color: gray;
+}
+
+.actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.offer-btn {
+  background: green;
+  color: white;
+}
+
+.chat-btn {
+  background: #007bff;
+  color: white;
+}
+
+.delete-btn {
+  background: red;
+  color: white;
+}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Posted Jobs</title>
+  <link rel="stylesheet" href="/css/yourpostedjobs.css">
+</head>
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <h1>Your Posted Jobs</h1>
+    <p>Manage and monitor your job listings</p>
+  </div>
+
+  <div class="job-grid">
+    <% posts.forEach(post => { %>
+
+      <div class="job-card">
+
+        <img src="<%= post.images && post.images.length ? post.images[0] : '/default.jpg' %>" class="job-img">
+
+        <div class="job-content">
+          <h3><%= post.profession %></h3>
+          <p class="desc"><%= post.description %></p>
+
+          <p class="location">📍 <%= post.location %></p>   
+
+          <div class="stats">
+            <span>💰 ₹<%= post.budget %></span>
+
+            <!-- TEMP STATIC (you can replace later with real counts) -->
+            <span>👷 0 Claimed</span>
+            <span>📩 0 Offers</span>
+          </div>
+
+          <div class="status <%= post.status %>">
+            <%= post.status %>
+          </div>
+
+          <p class="time">
+            🕒 <%= timeAgo(post.createdAt) %>
+          </p>
+
+          <div class="actions">
+            <button class="offer-btn">View Offers</button>
+            <button class="chat-btn">Chat</button>
+            <button class="delete-btn">Delete</button>
+          </div>
+        </div>
+
+      </div>
+
+    <% }) %>
+  </div>
+
+</div>
+
+</body>
+</html>
