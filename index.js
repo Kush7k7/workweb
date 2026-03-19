@@ -157,7 +157,7 @@ app.post("/postjob", upload.array("images", 5), async (req, res) => {
       budget,
       images: imageUrls,
       createdAt: new Date(),
-       userId: req.session.id,
+       userId: req.session.user.id.toString(),
        userName
 
     });
@@ -319,15 +319,19 @@ app.get("/yourpostedjobs",async (req,resp)=>{
         return resp.redirect("/login");
     }
     try {
-    const posts = await db.collection("postjob")
-      .find({ userId: req.session.user.id }) // only user's posts
-      .sort({ createdAt: -1 })
-      .toArray();
+  console.log("SESSION:", req.session.user);
 
-    resp.render("yourpostedjobs", { posts, timeAgo });
-  } catch (err) {
-    console.log(err);
-    resp.send("Error loading posts");
-  }
+  const posts = await db.collection("postjob")
+    .find({ userId: req.session.user.id })
+    .toArray();
+
+  console.log("POSTS:", posts);
+
+  resp.render("yourpostedjobs", { posts, timeAgo });
+
+} catch (err) {
+  console.log("ERROR:", err);
+  resp.send("Error loading posts");
+}
 
 });
