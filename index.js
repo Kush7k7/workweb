@@ -2,7 +2,10 @@ import express from 'express'
 import path from 'path'
 import session from 'express-session';
 import bcrypt from "bcrypt";
-import { MongoClient } from 'mongodb';
+
+import { MongoClient, ObjectId } from 'mongodb';
+
+
 
 
 const url="mongodb+srv://KushProject:Kush%401234%247@cluster0.i0u2bam.mongodb.net/?appName=Cluster0"
@@ -35,12 +38,20 @@ const publicpath = path.resolve('public')
 app.use(express.static(publicpath));
 app.use(express.static("public"));
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.set("view engine", "ejs");
-app.use(express.urlencoded({extended:false}));
+// app.use(express.urlencoded({extended:false}));
 app.use(session({
     secret: "mysecretkey",
     resave: false,
-    saveUninitialized:false
+    saveUninitialized:false,
+
+    cookie: {
+        httpOnly: true,
+        secure: false   // ✅ keep false for localhost
+    }
 }));
 
 startServer();
@@ -77,9 +88,16 @@ app.post("/login", async (req, resp) => {
     let usename =null;
 
     const user = await db.collection("CommonUser").findOne({ email });
-    if (user){
+    if (user.role === "user") {
          usename= await db.collection("User").findOne({accountId : user._id});
     }
+    else if (user.role === "worker") {
+         usename= await db.collection("Worker").findOne({accountId : user._id});
+    }
+    else if (user.role === "company") {
+         usename= await db.collection("Company").findOne({accountId : user._id});
+    }
+
     
 
     if(!user){
@@ -99,17 +117,25 @@ app.post("/login", async (req, resp) => {
         id: user._id,
         username:usename.name
     };
+
+    console.log("Logged in user:", req.session.user);
      if(user.role === "user"){
-     resp.redirect("/");
+     req.session.save(() => {
+    resp.redirect("/");
+});
      
  }
 
  else if(user.role === "worker"){
-     resp.redirect("/homeWorker");
+     req.session.save(() => {
+    resp.redirect("/homeWorker");
+});
  }
 
  else if(user.role === "company"){
-     resp.redirect("/homeCompany");
+     req.session.save(() => {
+    resp.redirect("/homeCompany");
+});
  }
     
 
@@ -171,6 +197,99 @@ app.post("/postjob", upload.array("images", 5), async (req, res) => {
 
 });
 
+app.post("/send-offer", async (req, res) => {
+    try {
+        
+
+        if (!req.session.user) {
+            return res.json({ success: false, message: "Login required" });
+        }
+
+        const { jobId, offerPrice } = req.body;
+
+        const postedby = await db.collection("postjob").findOne({_id: new ObjectId(jobId)});
+       
+
+        const workerId = req.session.user.id;
+        const workerName = req.session.user.username;
+
+
+        // await db.collection("offers").insertOne({
+        //     jobId: new ObjectId(jobId),
+        //     postedby: postedby.userName,
+        //     createdAt: new Date(),
+        //     offerby: workerId,
+        //     workerName,
+        //     offerPrice,
+            
+            
+        // });
+
+        await db.collection("postjob").updateOne(
+            { _id: new ObjectId(jobId) },
+            {
+        $push: {
+            offers: {
+                workerId,
+                workerName,
+                offerPrice,
+                createdAt: new Date()
+            }
+        }
+    }
+        );
+
+        res.json({ success: true });
+
+    } catch (err) {
+        console.log("SEND OFFER ERROR:", err);
+        res.json({ success: false });
+    }
+});
+
+app.post("/claim-job", async (req, res) => {
+    try {
+        if (!req.session.user) {
+            return res.json({ success: false, message: "Login required" });
+        }
+
+        const { jobId } = req.body;
+
+        const workerId = req.session.user.id;
+        const workerName = req.session.user.username;
+
+        // prevent duplicate claim
+        const existing = await db.collection("postjob").findOne({
+            _id: new ObjectId(jobId),
+            "claims.workerId": workerId
+        });
+
+        if (existing) {
+            return res.json({ success: false, message: "Already claimed" });
+        }
+
+        // add claim
+        await db.collection("postjob").updateOne(
+            { _id: new ObjectId(jobId) },
+            {
+                $push: {
+                    claims: {
+                        workerId,
+                        workerName,
+                        createdAt: new Date()
+                    }
+                }
+            }
+        );
+
+        res.json({ success: true });
+
+    } catch (err) {
+        console.log(err);
+        res.json({ success: false });
+    }
+});
+
 app.post("/companypro", async (req, resp) => {
 
     const collection = db.collection(companyCollections);
@@ -184,11 +303,23 @@ app.post("/companypro", async (req, resp) => {
 
 app.post("/workerpro", async (req, resp) => {
 
+
+
     const collection = db.collection(workerCollections);
+
+    
 
     const result = await collection.insertOne({...req.body, accountId : result1.insertedId});
 
-    console.log("Inserted:", result);
+    
+
+
+
+      req.session.user = {
+        
+        id: result. accountId ,
+        username:result.name
+    };
 
     resp.redirect("/homeWorker");
 });
@@ -238,6 +369,8 @@ resp.render("userpro")
 
 app.get("/workerpro", async (req, resp) => {
 
+  
+
     const professionsCollection = db.collection("professions");
 
     const professions = await professionsCollection.find({}).toArray();
@@ -254,45 +387,56 @@ resp.render("companypro")
 
 
 app.get("/homeWorker", async (req, res) => {
-  try {
-    let { page = 1, limit = 8, category, location, minBudget, maxBudget } = req.query;
 
-    page = parseInt(page);
-    limit = parseInt(limit);
-
-    let filter = {};
-
-    if (category) filter.profession = category;
-    if (location) filter.location = location;
-
-    if (minBudget || maxBudget) {
-      filter.$expr = {
-        $and: [
-          minBudget ? { $gte: [{ $toDouble: "$budget" }, Number(minBudget)] } : true,
-          maxBudget ? { $lte: [{ $toDouble: "$budget" }, Number(maxBudget)] } : true
-        ]
-      };
+    if (!req.session.user) {
+        return res.redirect("/login");
     }
 
-    const jobCollection = db.collection("postjob");
+    try {
+        let { page = 1, limit = 8, category, location, minBudget, maxBudget } = req.query;
 
-    const total = await jobCollection.countDocuments(filter);
+        page = parseInt(page);
+        limit = parseInt(limit);
 
-    const jobs = await jobCollection.find(filter)
-      .sort({ createdAt: -1 })
-      .skip((page - 1) * limit)
-      .limit(limit)
-      .toArray();
+        const workerId = req.session.user.id;
 
-    res.render("homeWorker", {
-      jobs,
-      currentPage: page,
-      totalPages: Math.ceil(total / limit) || 1
-    });
+        // ✅ NEW FILTER
+        let filter = {
+            "offers.workerId": { $ne: workerId },
+            "claims.workerId": { $ne: workerId }
+        };
 
-  } catch (err) {
-    console.log("ERROR:", err);
-  }
+        if (category) filter.profession = category;
+        if (location) filter.location = location;
+
+        if (minBudget || maxBudget) {
+            filter.$expr = {
+                $and: [
+                    minBudget ? { $gte: [{ $toDouble: "$budget" }, Number(minBudget)] } : true,
+                    maxBudget ? { $lte: [{ $toDouble: "$budget" }, Number(maxBudget)] } : true
+                ]
+            };
+        }
+
+        const jobCollection = db.collection("postjob");
+
+        const total = await jobCollection.countDocuments(filter);
+
+        const jobs = await jobCollection.find(filter)
+            .sort({ createdAt: -1 })
+            .skip((page - 1) * limit)
+            .limit(limit)
+            .toArray();
+
+        res.render("homeWorker", {
+            jobs,
+            currentPage: page,
+            totalPages: Math.ceil(total / limit) || 1
+        });
+
+    } catch (err) {
+        console.log("ERROR:", err);
+    }
 });
 
 
@@ -334,4 +478,46 @@ app.get("/yourpostedjobs",async (req,resp)=>{
   resp.send("Error loading posts");
 }
 
+});
+
+
+app.get("/yourworkpage", async (req, resp) => {
+    // 1. Ensure user is logged in
+    if (!req.session.user) {
+        return resp.redirect("/login");
+    }
+
+    try {
+        const workerId = req.session.user.id;
+
+        
+
+        const myJobs = await db.collection("postjob").aggregate([
+  {
+    $match: {
+  $or: [
+    { "offers.workerId": workerId },
+    { "claims.workerId": workerId }
+  ]
+}
+  },
+  {
+    $addFields: {
+      myOffer: {
+        $filter: {
+          input: "$offers",
+          as: "offer",
+          cond: { $eq: ["$$offer.workerId", workerId] }
+        }
+      }
+    }
+  }
+]).toArray();
+
+resp.render("yourworkpage", { jobs: myJobs ,workerId});
+
+    } catch (err) {
+        console.log("ERROR loading your work:", err);
+        resp.send("Error loading your work page.");
+    }
 });

@@ -105,9 +105,13 @@
 
             <div class="job-actions">
                 <button class="offer-btn">Send Offer</button>
-                <button class="Claim-btn">Claim</button>
+                <button class="Claim-btn" data-id="<%= job._id %>">Claim</button>
                 <button class="chat-btn">Chat</button>
             </div>
+            <div class="offer-box">
+    <input type="number" class="offer-price" placeholder="Offer price" ></input>
+    <button class="send-offer-btn" data-id="<%= job._id %>">Send</button>
+</div>
 
         </div>
     <% }) %>
@@ -129,28 +133,7 @@
 </section>
     </main>
 
-    <script >changePage = function(page) {
-    console.log("clicked page:", page); // DEBUG
-    const params = new URLSearchParams(window.location.search);
-    params.set("page", page);
-    window.location.href = "/homeWorker?" + params.toString();
-}
-
-function applyFilters() {
-    const category = document.getElementById("category").value;
-    const location = document.getElementById("location").value;
-    const minBudget = document.getElementById("minBudget").value;
-    const maxBudget = document.getElementById("maxBudget").value;
-
-    const params = new URLSearchParams();
-
-    if (category) params.set("category", category);
-    if (location) params.set("location", location);
-    if (minBudget) params.set("minBudget", minBudget);
-    if (maxBudget) params.set("maxBudget", maxBudget);
-
-    window.location.href = "/homeWorker?" + params.toString();
-}</script>
+    <script src="/js/homeWorker.js"></script>
 
     
 

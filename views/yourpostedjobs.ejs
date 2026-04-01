@@ -31,8 +31,8 @@
             <span>💰 ₹<%= post.budget %></span>
 
             <!-- TEMP STATIC (you can replace later with real counts) -->
-            <span>👷 0 Claimed</span>
-            <span>📩 0 Offers</span>
+            <span>👷 <%= post.claims ? post.claims.length : 0 %> Claimed</span>
+            <span>📩 <%= post.offers ? post.offers.length : 0 %> Offers</span>
           </div>
 
           <div class="status <%= post.status %>">

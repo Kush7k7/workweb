@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Work</title>
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo">
+                <i class="fa-solid fa-handshake" style="color: #d96530;"></i>
+                <span>ServiceDelivery</span>
+            </div>
+        </div>
+        <div class="nav-right">
+            <button class="btn btn-outline" onclick="window.location.href='/homeWorker';">Back to Jobs</button>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="job-listings-section" style="margin-top: 40px;">
+            <h2 style="margin-bottom: 20px; color: #333; border-bottom: 2px solid #eee; padding-bottom: 10px;">
+                <i class="fas fa-clipboard-check"></i> Your Claimed Jobs & Offers
+            </h2>
+
+            <div class="job-grid">
+                <% if (jobs.length === 0) { %>
+                    <p>You haven't claimed any jobs or sent any offers yet.</p>
+                <% } else { %>
+                    <% jobs.forEach(job => { %>
+                        <div class="job-card active" style="border: 2px solid #4CAF50;">
+                            <!-- <img src="<%= job.images && job.images.length ? job.images[0] : '/default.jpg' %>" class="job-img"/> -->
+                            <img src="<%= job.images && job.images.length ? job.images[0] : '/default.jpg' %>" class="job-img" />
+                            <h3><%= job.profession %></h3>
+                            <p>Posted by: <span style="font-weight: bold;"><%= job.userName %></span></p>
+                            <p>Location 🚩: <span style="font-weight: bold;"><%= job.location %></span></p>
+                            <p>Budget ₹: <span style="font-weight: bold;"><%= job.budget %></span></p>
+                            <p class="desc"><%= job.description %></p>
+                           
+                            <%  const myOffer = Array.isArray(job.offers) ? job.offers.find(o => o.workerId == workerId) : null; %>
+                            <p>Your Offer ₹:<span style="font-weight: bold;"><%= myOffer ? myOffer.offerPrice : 'No offer' %></span></p>
+                           
+                            <% const myClaim = Array.isArray(job.claims) ? job.claims.find(c => c.workerId == workerId) : null; %><p>
+                             Status:<span style="font-weight: bold;"> <%= myClaim ? "Claimed ✅" : "offered" %> </span></p>
+                             
+                            <div style="margin-top: 15px; padding: 10px; background-color: #e8f5e9; border-radius: 5px; color: #2e7d32; text-align: center; font-weight: bold;">
+                                <i class="fas fa-check-circle"></i> Successfully Secured
+                            </div>
+                        </div>
+                    <% }) %>
+                <% } %>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
