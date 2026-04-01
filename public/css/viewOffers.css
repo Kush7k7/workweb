@@ -1,0 +1,109 @@
+.offers-container {
+  max-width: 700px;
+  margin: auto;
+  padding: 20px;
+}
+
+.offers-list {
+  margin-top: 20px;
+}
+
+.offer-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  background: #f9f9f9;
+  transition: 0.3s;
+}
+
+.offer-card:hover {
+  transform: scale(1.02);
+}
+
+.offer-info h3 {
+  margin: 0;
+}
+
+.offer-info p {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* LOWEST OFFER */
+.lowest {
+  border: 2px solid #28a745;
+  background: #eaffea;
+}
+
+/* ACCEPTED */
+.accepted {
+  border: 2px solid #007bff;
+  background: #e6f0ff;
+}
+
+/* BADGES */
+.badge {
+  display: inline-block;
+  margin-top: 5px;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.lowest-badge {
+  background: #28a745;
+  color: white;
+}
+
+.accepted-badge {
+  background: #007bff;
+  color: white;
+}
+
+/* BUTTONS */
+.accept-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.accept-btn:hover {
+  background: #218838;
+}
+
+.disabled-btn {
+  background: gray;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+}
+.job-img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 20px;
+}
+.claimed {
+  border: 2px solid orange;
+  background: #fff5e6;
+}
+
+.claim-badge {
+  background: orange;
+  color: white;
+}
+
+a {
+  color: #000000;
+  text-decoration: none;
+  border-radius: 6px;
+  padding: 1px 2px;
+  border: 2px solid #28a745;
+}

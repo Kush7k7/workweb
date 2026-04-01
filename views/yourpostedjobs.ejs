@@ -8,6 +8,9 @@
 <body>
 
 <div class="container">
+  <div class="nav-right">
+            <button class="btn btn-outline" onclick="window.location.href='/';" style="float: right;">Back to home</button>
+        </div>
 
   <div class="header">
     <h1>Your Posted Jobs</h1>
@@ -44,7 +47,9 @@
           </p>
 
           <div class="actions">
-            <button class="offer-btn">View Offers</button>
+            <button class="offer-btn" onclick="viewOffers('<%= post._id %>')">
+  View Offers
+</button>
             <button class="chat-btn">Chat</button>
             <button class="delete-btn">Delete</button>
           </div>
@@ -56,6 +61,11 @@
   </div>
 
 </div>
+<script>
+function viewOffers(jobId) {
+  window.location.href = `/view-offers/${jobId}`;
+}
+</script>
 
 </body>
 </html>

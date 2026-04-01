@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/viewOffers.css">
+</head>
+<body>
+    <div class="nav-right">
+            <button class="btn btn-outline" onclick="window.location.href='/yourpostedjobs';" style="float: right; margin:15px;">Back to home</button>
+        </div>
+    <div class="offers-container">
+        
+
+  <h2>Offers for <%= job.profession %></h2>
+  <img src="<%= job.images && job.images.length ? job.images[0] : '/default.jpg' %>" class="job-img">
+
+  <% if (job.offers && job.offers.length > 0) { %>
+
+  <!-- 🟢 OFFERS SECTION -->
+  <h3>Offers</h3>
+
+  <% 
+    let lowestOffer = job.offers.reduce((min, offer) => {
+      return Number(offer.offerPrice) < Number(min.offerPrice) ? offer : min;
+    });
+  %>
+
+  <% job.offers.forEach(offer => { %>
+
+    <div class="offer-card <%= offer.offerPrice == lowestOffer.offerPrice ? 'lowest' : '' %>">
+
+      <h4><%= offer.workerName %></h4>
+      <a href="#">Worker details </a>
+      <p>₹ <%= offer.offerPrice %></p>
+
+      <% if (offer.offerPrice == lowestOffer.offerPrice) { %>
+        <span class="badge lowest-badge">🟢 Lowest</span>
+      <% } %>
+
+      <% if (!job.acceptedWorker) { %>
+        <button onclick="acceptOffer('<%= job._id %>', '<%= offer.workerId %>')">
+          Accept
+        </button>
+      <% } %>
+
+    </div>
+
+  <% }) %>
+
+<% }  if (job.claims && job.claims.length > 0) { %>
+
+  <!-- 🔵 CLAIM SECTION -->
+  <h3>Claimed Workers</h3>
+
+  <% job.claims.forEach(claim => { %>
+
+    <div class="offer-card claimed">
+
+      <h4><%= claim.workerName %></h4>
+      <p>💰 Fixed Price: ₹ <%= job.budget %></p>
+
+      <span class="badge claim-badge">⚡ Claimed</span>
+
+      <% if (!job.acceptedWorker) { %>
+        <button onclick="acceptClaim('<%= job._id %>', '<%= claim.workerId %>')">
+          Accept
+        </button>
+      <% } %>
+
+    </div>
+
+  <% }) %>
+
+<% } 
+
+else { %>
+
+  <p>No offers or claims yet</p>
+
+<% } %>
+
+</div>
+</body>
+</html>

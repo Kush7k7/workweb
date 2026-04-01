@@ -521,3 +521,23 @@ resp.render("yourworkpage", { jobs: myJobs ,workerId});
         resp.send("Error loading your work page.");
     }
 });
+
+app.get("/view-offers/:jobId", async (req, res) => {
+  try {
+    const jobId = req.params.jobId;
+
+    const job = await db.collection("postjob").findOne({
+      _id: new ObjectId(jobId)
+    });
+
+    if (!job) {
+      return res.send("Job not found");
+    }
+
+    res.render("viewOffers", { job });
+
+  } catch (err) {
+    console.log("ERROR:", err);
+    res.send("Error loading offers page");
+  }
+});
