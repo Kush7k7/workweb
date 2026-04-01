@@ -463,15 +463,12 @@ app.get("/yourpostedjobs",async (req,resp)=>{
         return resp.redirect("/login");
     }
     try {
-  console.log("SESSION:", req.session.user);
 
   const posts = await db.collection("postjob")
     .find({ userId: req.session.user.id })
     .toArray();
 
-  console.log("POSTS:", posts);
-
-  resp.render("yourpostedjobs", { posts, timeAgo });
+    resp.render("yourpostedjobs", { posts, timeAgo });
 
 } catch (err) {
   console.log("ERROR:", err);
