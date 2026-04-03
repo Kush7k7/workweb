@@ -65,8 +65,12 @@
 <div class="job-filters">
     <select id="category">
         <option value="">All Categories</option>
-        <option value="plumber">Plumber</option>
-        <option value="electrician">Electrician</option>
+        
+        <% professions.forEach(function(p){ %>
+
+<option value="<%= p.value %>"><%= p.name %></option>
+
+<% }) %>
     </select>
 
     <input type="text" id="location" placeholder="Location">
@@ -104,8 +108,8 @@
             </span> -->
 
             <div class="job-actions">
-                <button class="offer-btn">Send Offer</button>
-                <button class="Claim-btn" data-id="<%= job._id %>">Claim</button>
+                <button class="offer-btn">Send Offer <%= job.offers ? job.offers.length : 0 %></button>
+                <button class="Claim-btn" data-id="<%= job._id %>">Claim <%= job.claims ? job.claims.length : 0 %></button>
                 <button class="chat-btn">Chat</button>
             </div>
             <div class="offer-box">

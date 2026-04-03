@@ -417,6 +417,9 @@ app.get("/homeWorker", async (req, res) => {
                 ]
             };
         }
+         const professionsCollection = db.collection("professions");
+
+    const professions = await professionsCollection.find({}).toArray();
 
         const jobCollection = db.collection("postjob");
 
@@ -431,7 +434,8 @@ app.get("/homeWorker", async (req, res) => {
         res.render("homeWorker", {
             jobs,
             currentPage: page,
-            totalPages: Math.ceil(total / limit) || 1
+            totalPages: Math.ceil(total / limit) || 1,
+            professions
         });
 
     } catch (err) {
