@@ -324,6 +324,71 @@ app.post("/workerpro", async (req, resp) => {
     resp.redirect("/homeWorker");
 });
 
+app.post('/accept-offer', async (req, res) => {
+  const { jobId, workerId } = req.body;
+
+  const job = await db.collection('postjob').findOne({ _id: new ObjectId(jobId) });
+
+  const worker = job.offers.find(o => o.workerId === workerId);
+
+  await db.collection('postjob').updateOne(
+    { _id: new ObjectId(jobId) },
+    {
+      $set: {
+        acceptedWorker: {
+          workerId: worker.workerId,
+          workerName: worker.workerName,
+          type: "offer",
+          status: "booked",
+          acceptedAt: new Date()
+        }
+      }
+    }
+  );
+
+  res.json({ success: true });
+});
+
+app.post('/accept-claim', async (req, res) => {
+  const { jobId, workerId } = req.body;
+
+  const job = await db.collection('postjob').findOne({ _id: new ObjectId(jobId) });
+
+  const worker = job.claims.find(c => c.workerId === workerId);
+
+  await db.collection('postjob').updateOne(
+    { _id: new ObjectId(jobId) },
+    {
+      $set: {
+        acceptedWorker: {
+          workerId: worker.workerId,
+          workerName: worker.workerName,
+          type: "claim",
+          status: "booked",
+          acceptedAt: new Date()
+        }
+      }
+    }
+  );
+
+  res.json({ success: true });
+});
+
+app.post('/cancel-job', async (req, res) => {
+  const { jobId } = req.body;
+
+  await db.collection('postjob').updateOne(
+    { _id: new ObjectId(jobId) },
+    {
+      $set: {
+        "acceptedWorker.status": "cancelled"
+      }
+    }
+  );
+
+  res.json({ success: true });
+});
+
 app.get("/", async (req, resp) => {
 
     // if(!req.session.user){
@@ -542,3 +607,4 @@ app.get("/view-offers/:jobId", async (req, res) => {
     res.send("Error loading offers page");
   }
 });
+

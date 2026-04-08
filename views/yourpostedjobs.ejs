@@ -26,6 +26,9 @@
 
         <div class="job-content">
           <h3><%= post.profession %></h3>
+          <h3 style="color: green;">
+  <%= post.acceptedWorker && post.acceptedWorker.status === "booked" ? "✅ Booked" : "" %>
+</h3>
           <p class="desc"><%= post.description %></p>
 
           <p class="location">📍 <%= post.location %></p>   

@@ -32,7 +32,11 @@
                 <% } else { %>
                     <% jobs.forEach(job => { %>
                         <div class="job-card active" style="border: 2px solid #4CAF50;">
-                            <!-- <img src="<%= job.images && job.images.length ? job.images[0] : '/default.jpg' %>" class="job-img"/> -->
+                                <% if (job.acceptedWorker && workerId === job.acceptedWorker.workerId) { %>
+                                    <h4 style="color: #2e7d32;"> <%= job.acceptedWorker && job.acceptedWorker.status === "booked" ? " Offerr Accepted" : "" %></h4>
+                                    <% }  %>
+
+                           
                             <img src="<%= job.images && job.images.length ? job.images[0] : '/default.jpg' %>" class="job-img" />
                             <h3><%= job.profession %></h3>
                             <p>Posted by: <span style="font-weight: bold;"><%= job.userName %></span></p>
@@ -46,9 +50,14 @@
                             <% const myClaim = Array.isArray(job.claims) ? job.claims.find(c => c.workerId == workerId) : null; %><p>
                              Status:<span style="font-weight: bold;"> <%= myClaim ? "Claimed ✅" : "offered" %> </span></p>
                              
-                            <div style="margin-top: 15px; padding: 10px; background-color: #e8f5e9; border-radius: 5px; color: #2e7d32; text-align: center; font-weight: bold;">
-                                <i class="fas fa-check-circle"></i> Successfully Secured
-                            </div>
+                             <div style="margin-top: 15px; padding: 10px; background-color: #e8f5e9; border-radius: 5px; color: #2e7d32; text-align: center; font-weight: bold;">
+                             <% if (job.acceptedWorker && workerId === job.acceptedWorker.workerId && job.acceptedWorker.status === "booked") { %>
+
+                                 <button >Call</button>
+                                <button >Cancel</button> 
+                                 <button >Start At</button>
+                              <% }  %>  
+                              </div> 
                         </div>
                     <% }) %>
                 <% } %>

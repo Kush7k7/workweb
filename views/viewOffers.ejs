@@ -3,84 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Offers & Claims</title>
     <link rel="stylesheet" href="/css/viewOffers.css">
+
+    <style>
+        .booked {
+            border: 2px solid green;
+        }
+
+        .booked-badge {
+            background: green;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .disabled-btn {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
 </head>
+
 <body>
-    <div class="nav-right">
-            <button class="btn btn-outline" onclick="window.location.href='/yourpostedjobs';" style="float: right; margin:15px;">Back to home</button>
+
+<div class="nav-right">
+    <button onclick="window.location.href='/yourpostedjobs';" style="float:right;margin:15px;">
+        Back to home
+    </button>
+</div>
+
+<div class="offers-container">
+
+    <h2>Offers for <%= job.profession %></h2>
+
+    <img src="<%= job.images && job.images.length ? job.images[0] : '/default.jpg' %>" class="job-img">
+
+    <!-- ================= OFFERS ================= -->
+    <% if (job.offers && job.offers.length > 0) { %>
+
+        <h3>Offers</h3>
+
+        <% 
+        let lowestOffer = job.offers.reduce((min, offer) => {
+            return Number(offer.offerPrice) < Number(min.offerPrice) ? offer : min;
+        });
+        %>
+
+        <% job.offers.forEach(offer => { 
+            const isBooked = job.acceptedWorker && job.acceptedWorker.workerId == offer.workerId && job.acceptedWorker.status === "booked";
+            const isOtherBooked = job.acceptedWorker && job.acceptedWorker.workerId != offer.workerId && job.acceptedWorker.status === "booked";
+        %>
+
+        <div class="offer-card 
+            <%= offer.offerPrice == lowestOffer.offerPrice ? 'lowest' : '' %>
+            <%= isBooked ? 'booked' : '' %>">
+
+            <h4><%= offer.workerName %></h4>
+
+            <a href="#">Worker details</a>
+
+            <p>₹ <%= offer.offerPrice %></p>
+
+            <% if (offer.offerPrice == lowestOffer.offerPrice) { %>
+                <span class="badge lowest-badge">🟢 Lowest Offer</span>
+            <% } %>
+
+            <button>Chat</button>
+
+            <% if (isBooked) { %>
+
+                <span class="badge booked-badge">✅ Booked</span>
+
+                <button onclick="callWorker('<%= offer.workerId %>')">Call</button>
+
+                <button onclick="cancelJob('<%= job._id %>')" style="background-color: #f44336; color: white;">Cancel</button>
+
+            <% } else { %>
+
+                
+
+                <% if (!job.acceptedWorker || job.acceptedWorker.status === "cancelled") { %>
+                    <button onclick="acceptOffer('<%= job._id %>', '<%= offer.workerId %>')">
+                        Accept
+                    </button>
+                <% } else if (isOtherBooked) { %>
+                    <button class="disabled-btn" disabled>Accepted</button>
+                <% } %>
+
+            <% } %>
+
         </div>
-    <div class="offers-container">
-        
 
-  <h2>Offers for <%= job.profession %></h2>
-  <img src="<%= job.images && job.images.length ? job.images[0] : '/default.jpg' %>" class="job-img">
+        <% }) %>
 
-  <% if (job.offers && job.offers.length > 0) { %>
+    <% } %>
 
-  <!-- 🟢 OFFERS SECTION -->
-  <h3>Offers</h3>
 
-  <% 
-    let lowestOffer = job.offers.reduce((min, offer) => {
-      return Number(offer.offerPrice) < Number(min.offerPrice) ? offer : min;
-    });
-  %>
+    <!-- ================= CLAIMS ================= -->
+    <% if (job.claims && job.claims.length > 0) { %>
 
-  <% job.offers.forEach(offer => { %>
+        <h3>Claimed Workers</h3>
 
-    <div class="offer-card <%= offer.offerPrice == lowestOffer.offerPrice ? 'lowest' : '' %>">
+        <% job.claims.forEach(claim => { 
+            const isBooked = job.acceptedWorker && job.acceptedWorker.workerId == claim.workerId && job.acceptedWorker.status === "booked";
+            const isOtherBooked = job.acceptedWorker && job.acceptedWorker.workerId != claim.workerId && job.acceptedWorker.status === "booked";
+        %>
 
-      <h4><%= offer.workerName %></h4>
-      <a href="#">Worker details </a>
-      <p>₹ <%= offer.offerPrice %></p>
+        <div class="offer-card claimed <%= isBooked ? 'booked' : '' %>">
 
-      <% if (offer.offerPrice == lowestOffer.offerPrice) { %>
-        <span class="badge lowest-badge">🟢 Lowest</span>
-      <% } %>
+            <h4><%= claim.workerName %></h4>
 
-      <% if (!job.acceptedWorker) { %>
-        <button onclick="acceptOffer('<%= job._id %>', '<%= offer.workerId %>')">
-          Accept
-        </button>
-      <% } %>
+            <p>💰 Fixed Price: ₹ <%= job.budget %></p>
 
-    </div>
+            <span class="badge claim-badge">⚡ Claimed</span>
 
-  <% }) %>
+            <% if (isBooked) { %>
 
-<% }  if (job.claims && job.claims.length > 0) { %>
+                <span class="badge booked-badge">✅ Booked</span>
+                <button>Chat</button>
 
-  <!-- 🔵 CLAIM SECTION -->
-  <h3>Claimed Workers</h3>
+                <button onclick="callWorker('<%= claim.workerId %>')">Call</button>
 
-  <% job.claims.forEach(claim => { %>
+                <button onclick="cancelJob('<%= job._id %>')" style="background-color: #f44336; color: white;">Cancel</button>
 
-    <div class="offer-card claimed">
+            <% } else { %>
+                
 
-      <h4><%= claim.workerName %></h4>
-      <p>💰 Fixed Price: ₹ <%= job.budget %></p>
+                <% if (!job.acceptedWorker || job.acceptedWorker.status === "cancelled") { %>
+                    <button onclick="acceptClaim('<%= job._id %>', '<%= claim.workerId %>')">
+                        Accept
+                    </button>
+                <% } else if (isOtherBooked) { %>
+                    <button class="disabled-btn" disabled>Accepted</button>
+                <% } %>
 
-      <span class="badge claim-badge">⚡ Claimed</span>
+            <% } %>
 
-      <% if (!job.acceptedWorker) { %>
-        <button onclick="acceptClaim('<%= job._id %>', '<%= claim.workerId %>')">
-          Accept
-        </button>
-      <% } %>
+        </div>
 
-    </div>
+        <% }) %>
 
-  <% }) %>
+    <% } %>
 
-<% } 
 
-else { %>
-
-  <p>No offers or claims yet</p>
-
-<% } %>
+    <!-- ================= EMPTY STATE ================= -->
+    <% if ((!job.offers || job.offers.length === 0) && (!job.claims || job.claims.length === 0)) { %>
+        <p>No offers or claims yet</p>
+    <% } %>
 
 </div>
+
+
+<!-- ================= JS ================= -->
+<script>
+
+async function acceptOffer(jobId, workerId) {
+    const res = await fetch('/accept-offer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ jobId, workerId })
+    });
+
+    const data = await res.json();
+    if (data.success) location.reload();
+}
+
+async function acceptClaim(jobId, workerId) {
+    const res = await fetch('/accept-claim', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ jobId, workerId })
+    });
+
+    const data = await res.json();
+    if (data.success) location.reload();
+}
+
+async function cancelJob(jobId) {
+    const res = await fetch('/cancel-job', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ jobId })
+    });
+
+    const data = await res.json();
+    if (data.success) location.reload();
+}
+
+function callWorker(workerId) {
+    alert("Call feature coming soon: " + workerId);
+}
+
+</script>
+
 </body>
 </html>
