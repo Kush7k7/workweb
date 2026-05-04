@@ -25,7 +25,7 @@ async function startServer() {
 
     db = client.db(database);
 
-    app.listen(3200, () => {
+    app.listen(443, () => {
         console.log("Server running on port 3200");
     });
 }
@@ -212,18 +212,6 @@ app.post("/send-offer", async (req, res) => {
 
         const workerId = req.session.user.id;
         const workerName = req.session.user.username;
-
-
-        // await db.collection("offers").insertOne({
-        //     jobId: new ObjectId(jobId),
-        //     postedby: postedby.userName,
-        //     createdAt: new Date(),
-        //     offerby: workerId,
-        //     workerName,
-        //     offerPrice,
-            
-            
-        // });
 
         await db.collection("postjob").updateOne(
             { _id: new ObjectId(jobId) },
