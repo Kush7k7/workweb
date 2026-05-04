@@ -25,7 +25,7 @@ async function startServer() {
 
     db = client.db(database);
 
-    app.listen(443, () => {
+    app.listen(3200, () => {
         console.log("Server running on port 3200");
     });
 }
